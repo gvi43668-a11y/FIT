@@ -28,11 +28,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   background:var(--bg);color:var(--text);padding-bottom:90px;font-size:15px;
   line-height:1.5;transition:background .2s,color .2s}
 header{background:var(--card);padding:16px;position:sticky;top:0;z-index:10;
-  border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+  border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px}
 h1{font-size:18px;font-weight:600}h1 span{color:var(--accent)}
 .sub{font-size:11px;color:var(--muted);margin-top:2px}
+.header-actions{display:flex;gap:8px;flex-shrink:0}
 .theme-btn{background:var(--card2);border:1px solid var(--border);color:var(--text);
-  width:40px;height:40px;border-radius:12px;font-size:18px;cursor:pointer}
+  width:40px;height:40px;border-radius:12px;font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;padding:0}
 .tabs{display:flex;gap:4px;padding:12px 12px 0;overflow-x:auto}
 .tabs::-webkit-scrollbar{display:none}
 .tab{flex:0 0 auto;padding:8px 14px;border-radius:20px;background:var(--card);
@@ -132,24 +134,42 @@ canvas{width:100%!important;height:auto!important}
   color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
 #miniChart{display:block;width:100%;height:60px}
 
-/* Kcal ring */
-.kcal-card{padding:16px}
-.kcal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.kcal-head h3{margin:0}
-.kcal-ring-wrap{display:flex;align-items:center;gap:16px}
-.kcal-mini{position:relative;width:110px;height:110px;flex-shrink:0}
+/* Combined balance card */
+.combined-card{padding:16px}
+.combined-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.combined-head h3{margin:0}
+.combined-head .date{font-size:11px;color:var(--muted)}
+.ring-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.ring-block{display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:12px 6px;background:var(--card2);border-radius:14px;border:1px solid var(--border)}
+.ring-block .kcal-mini{width:96px;height:96px}
+.ring-block-info{text-align:center;margin-top:2px}
+.ring-block-val{font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
+.ring-block-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.kcal-mini{position:relative;flex-shrink:0}
 .kcal-mini svg{transform:rotate(-90deg)}
 .kcal-mini .bg{fill:none;stroke:var(--border);stroke-width:10}
-.kcal-mini .fg{fill:none;stroke:url(#kcalGrad);stroke-width:10;stroke-linecap:round;
-  transition:stroke-dashoffset 1s cubic-bezier(.22,1,.36,1)}
+.kcal-mini .fg{fill:none;stroke-width:10;stroke-linecap:round;
+  transition:stroke-dashoffset 1.2s cubic-bezier(.22,1,.36,1)}
+.kcal-mini .fg.kcal-fg{stroke:url(#kcalGrad)}
+.kcal-mini .fg.water-fg{stroke:url(#waterGrad)}
 .kcal-mini-txt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-.kcal-mini-num{font-size:24px;font-weight:800;line-height:1;background:var(--grad3);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.kcal-mini-num{font-size:22px;font-weight:800;line-height:1;letter-spacing:-0.5px}
+.kcal-mini-num.kcal-num{background:var(--grad3);-webkit-background-clip:text;
+  background-clip:text;-webkit-text-fill-color:transparent}
+.kcal-mini-num.water-num{background:var(--grad2);-webkit-background-clip:text;
+  background-clip:text;-webkit-text-fill-color:transparent}
 .kcal-mini-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
-.kcal-info{flex:1}
-.kcal-info .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.kcal-info .v{font-size:22px;font-weight:700;line-height:1.1}
-.kcal-info .s{font-size:12px;color:var(--muted);margin-top:4px}
+.combined-actions{padding-top:12px;border-top:1px solid var(--border)}
+.combined-actions-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.combined-actions-row .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.combined-actions-row .v{font-size:15px;font-weight:700}
+.combined-actions-row .v.good{color:var(--accent)}
+.combined-actions-row .v.over{color:var(--danger)}
+.water-btns{display:flex;gap:6px;margin-top:10px}
+.water-btns button{flex:1;background:var(--card2);border:1px solid var(--border);color:var(--text);
+  padding:9px 12px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer}
+.water-btns button.primary{background:var(--grad2);color:#fff;border:none}
 
 .macros-card{padding:14px 16px}
 .macro-row{display:grid;grid-template-columns:60px 1fr 78px;gap:10px;align-items:center;padding:8px 0}
@@ -183,22 +203,6 @@ canvas{width:100%!important;height:auto!important}
 .week-day .dow{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase}
 .week-day .dot{width:8px;height:8px;border-radius:50%;background:var(--border);margin:6px auto 4px;transition:all .3s}
 .week-day .num{font-size:11px;color:var(--muted)}
-
-.water-ring-wrap{display:flex;align-items:center;gap:16px}
-.water-mini{position:relative;width:80px;height:80px;flex-shrink:0}
-.water-mini svg{transform:rotate(-90deg)}
-.water-mini .bg{fill:none;stroke:var(--border);stroke-width:8}
-.water-mini .fg{fill:none;stroke:url(#waterGrad);stroke-width:8;stroke-linecap:round;
-  transition:stroke-dashoffset .6s ease}
-.water-mini-txt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  font-size:16px;font-weight:700;color:var(--accent2)}
-.water-info{flex:1}
-.water-info .t{font-size:14px;font-weight:600;margin-bottom:4px}
-.water-info .s{font-size:12px;color:var(--muted);margin-bottom:8px}
-.water-btns{display:flex;gap:6px}
-.water-btns button{background:var(--card2);border:1px solid var(--border);color:var(--text);
-  padding:7px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer}
-.water-btns button.primary{background:var(--grad2);color:#fff;border:none}
 
 .quick-meals{display:flex;flex-direction:column;gap:6px}
 .quick-meal{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--card2);
@@ -272,11 +276,14 @@ canvas{width:100%!important;height:auto!important}
 <body>
 
 <header>
-  <div>
+  <div style="min-width:0">
     <h1>Fit Plan <span id="headWeight">—</span></h1>
     <div class="sub" id="headDate"></div>
   </div>
-  <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+  <div class="header-actions">
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    <button class="theme-btn" onclick="go('settings')" title="Настройки">⚙️</button>
+  </div>
 </header>
 
 <div class="tabs">
@@ -286,7 +293,6 @@ canvas{width:100%!important;height:auto!important}
   <button class="tab" data-page="shop">Покупки</button>
   <button class="tab" data-page="train">Тренировки</button>
   <button class="tab" data-page="progress">Прогресс</button>
-  <button class="tab" data-page="settings">Настройки</button>
 </div>
 
 <!-- СЕГОДНЯ -->
@@ -302,12 +308,6 @@ canvas{width:100%!important;height:auto!important}
         <defs>
           <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#4ade80"/><stop offset="100%" stop-color="#22d3ee"/>
-          </linearGradient>
-          <linearGradient id="waterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#8b5cf6"/>
-          </linearGradient>
-          <linearGradient id="kcalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ef4444"/>
           </linearGradient>
         </defs>
         <circle class="ring-bg" cx="110" cy="110" r="90"/>
@@ -331,27 +331,72 @@ canvas{width:100%!important;height:auto!important}
     </div>
   </div>
 
-  <div class="card kcal-card">
-    <div class="kcal-head">
-      <h3>Калории за сегодня</h3>
-      <span class="hint" style="margin:0" id="kcalDateLabel"></span>
+  <!-- ОБЪЕДИНЁННАЯ КАРТОЧКА: БАЛАНС ДНЯ -->
+  <div class="card combined-card">
+    <div class="combined-head">
+      <h3>Баланс дня</h3>
+      <span class="date" id="balanceDate">—</span>
     </div>
-    <div class="kcal-ring-wrap">
-      <div class="kcal-mini">
-        <svg width="110" height="110" viewBox="0 0 110 110">
-          <circle class="bg" cx="55" cy="55" r="44"/>
-          <circle class="fg" id="kcalRing" cx="55" cy="55" r="44"
-            stroke-dasharray="276.46" stroke-dashoffset="276.46"/>
-        </svg>
-        <div class="kcal-mini-txt">
-          <div class="kcal-mini-num" id="kcalPct">0%</div>
-          <div class="kcal-mini-lbl">от лимита</div>
+    <div class="ring-pair">
+      <!-- Kcal ring -->
+      <div class="ring-block">
+        <div class="kcal-mini">
+          <svg width="96" height="96" viewBox="0 0 110 110">
+            <defs>
+              <linearGradient id="kcalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ef4444"/>
+              </linearGradient>
+            </defs>
+            <circle class="bg" cx="55" cy="55" r="44"/>
+            <circle class="fg kcal-fg" id="kcalRing" cx="55" cy="55" r="44"
+              stroke-dasharray="276.46" stroke-dashoffset="276.46"/>
+          </svg>
+          <div class="kcal-mini-txt">
+            <div class="kcal-mini-num kcal-num" id="kcalPct">0%</div>
+            <div class="kcal-mini-lbl">ккал</div>
+          </div>
+        </div>
+        <div class="ring-block-info">
+          <div class="ring-block-val" id="kcalEatenShort">0 / 0</div>
+          <div class="ring-block-lbl">из лимита</div>
         </div>
       </div>
-      <div class="kcal-info">
-        <div class="l">Осталось съесть</div>
-        <div class="v" id="kcalLeft">— ккал</div>
-        <div class="s" id="kcalEaten">Съедено 0 из —</div>
+      <!-- Water ring -->
+      <div class="ring-block">
+        <div class="kcal-mini">
+          <svg width="96" height="96" viewBox="0 0 110 110">
+            <defs>
+              <linearGradient id="waterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#8b5cf6"/>
+              </linearGradient>
+            </defs>
+            <circle class="bg" cx="55" cy="55" r="44"/>
+            <circle class="fg water-fg" id="waterRing" cx="55" cy="55" r="44"
+              stroke-dasharray="276.46" stroke-dashoffset="276.46"/>
+          </svg>
+          <div class="kcal-mini-txt">
+            <div class="kcal-mini-num water-num" id="waterPct">0%</div>
+            <div class="kcal-mini-lbl">вода</div>
+          </div>
+        </div>
+        <div class="ring-block-info">
+          <div class="ring-block-val" id="waterTitle">0 / 0</div>
+          <div class="ring-block-lbl">стаканов</div>
+        </div>
+      </div>
+    </div>
+    <div class="combined-actions">
+      <div class="combined-actions-row">
+        <span class="l">Осталось калорий</span>
+        <span class="v" id="kcalLeft">—</span>
+      </div>
+      <div class="combined-actions-row">
+        <span class="l">Вода выпито</span>
+        <span class="v" id="waterLiters">— л</span>
+      </div>
+      <div class="water-btns">
+        <button class="primary" onclick="quickWater()">+ 💧 стакан</button>
+        <button onclick="setWater(0)">Сброс</button>
       </div>
     </div>
   </div>
@@ -409,28 +454,6 @@ canvas{width:100%!important;height:auto!important}
   <div class="section-title">Эта неделя</div>
   <div class="week-strip" id="weekStrip"></div>
 
-  <div class="section-title">Вода</div>
-  <div class="card">
-    <div class="water-ring-wrap">
-      <div class="water-mini">
-        <svg width="80" height="80" viewBox="0 0 80 80">
-          <circle class="bg" cx="40" cy="40" r="32"/>
-          <circle class="fg" id="waterRing" cx="40" cy="40" r="32"
-            stroke-dasharray="201" stroke-dashoffset="201"/>
-        </svg>
-        <div class="water-mini-txt" id="waterMiniTxt">0</div>
-      </div>
-      <div class="water-info">
-        <div class="t" id="waterTitle">0 из 0 стаканов</div>
-        <div class="s" id="waterSub">Норма: 0 л</div>
-        <div class="water-btns">
-          <button class="primary" onclick="quickWater()">+ стакан</button>
-          <button onclick="setWater(0)">Сброс</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="section-title">Питание сегодня</div>
   <div class="card">
     <div class="quick-meals" id="todayMeals"></div>
@@ -442,27 +465,33 @@ canvas{width:100%!important;height:auto!important}
 
 <!-- ДНЕВНИК -->
 <div class="page" id="page-diary">
-  <div class="card kcal-card">
-    <div class="kcal-head">
+  <div class="card combined-card">
+    <div class="combined-head">
       <h3>Баланс калорий</h3>
-      <span class="hint" style="margin:0" id="diaryKcalDate"></span>
+      <span class="date" id="diaryKcalDate">—</span>
     </div>
-    <div class="kcal-ring-wrap">
-      <div class="kcal-mini">
-        <svg width="110" height="110" viewBox="0 0 110 110">
+    <div style="display:flex;align-items:center;gap:16px;justify-content:center">
+      <div class="kcal-mini" style="width:120px;height:120px">
+        <svg width="120" height="120" viewBox="0 0 110 110">
+          <defs>
+            <linearGradient id="kcalGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ef4444"/>
+            </linearGradient>
+          </defs>
           <circle class="bg" cx="55" cy="55" r="44"/>
           <circle class="fg" id="diaryKcalRing" cx="55" cy="55" r="44"
-            stroke-dasharray="276.46" stroke-dashoffset="276.46"/>
+            stroke-dasharray="276.46" stroke-dashoffset="276.46"
+            style="stroke:url(#kcalGrad2)"/>
         </svg>
         <div class="kcal-mini-txt">
-          <div class="kcal-mini-num" id="diaryKcalPct">0%</div>
+          <div class="kcal-mini-num kcal-num" id="diaryKcalPct">0%</div>
           <div class="kcal-mini-lbl">от лимита</div>
         </div>
       </div>
-      <div class="kcal-info">
-        <div class="l">Осталось</div>
-        <div class="v" id="diaryKcalLeft">— ккал</div>
-        <div class="s" id="diaryKcalEaten">Съедено 0 из —</div>
+      <div>
+        <div class="hint" style="margin:0 0 4px 0">Осталось</div>
+        <div style="font-size:22px;font-weight:700" id="diaryKcalLeft">— ккал</div>
+        <div class="hint" style="margin-top:6px" id="diaryKcalEaten">Съедено 0 из —</div>
       </div>
     </div>
   </div>
@@ -579,6 +608,7 @@ canvas{width:100%!important;height:auto!important}
 <div class="page" id="page-settings">
   <div class="card">
     <h3>Профиль</h3>
+    <div class="row"><span class="label">Имя</span><span class="val">Влад</span></div>
     <div class="row"><span class="label">Пол</span><span class="val">М</span></div>
     <div class="row"><span class="label">Возраст</span><span class="val">33</span></div>
     <div class="row"><span class="label">Рост</span><span class="val">181 см</span></div>
@@ -694,7 +724,8 @@ canvas{width:100%!important;height:auto!important}
 <div class="toast" id="toast"></div>
 
 <script>
-// ===== БАЗА ПРОДУКТОВ =====
+const USER_NAME = "Влад";
+
 const PRODUCTS = [
   {n:"Куриная грудка",k:165,p:31,f:3.6,c:0},{n:"Куриное бедро",k:185,p:25,f:10,c:0},
   {n:"Индейка филе",k:104,p:19,f:2,c:0},{n:"Говядина",k:187,p:19,f:12,c:0},
@@ -835,30 +866,95 @@ function todayTotals(){
   return todayEntries().reduce((a,e)=>({k:a.k+e.k,p:a.p+e.p,f:a.f+e.f,c:a.c+e.c}),{k:0,p:0,f:0,c:0});
 }
 
-// ===== ККАЛ КРУГ =====
-function renderKcalRings(animate){
-  const m=calcMetrics(currentWeight()),t=todayTotals();
-  const pct=Math.min(200,(t.k/m.target)*100);
-  const visible=Math.min(100,pct);
+// ===== ОБЪЕДИНЁННЫЙ РЕНДЕР ККАЛ + ВОДА =====
+let kcalRingAnimated=false;
+let waterRingAnimated=false;
+
+function renderBalance(animate){
+  const m=calcMetrics(currentWeight());
+  const t=todayTotals();
   const circ=276.46;
-  [document.getElementById('kcalRing'),document.getElementById('diaryKcalRing')].forEach(ring=>{
-    if(!ring)return;
-    const offset=circ-(visible/100)*circ;
-    if(animate){
-      ring.style.transition='none';ring.style.strokeDashoffset=circ;
+
+  // Kcal
+  const kcalPct=Math.min(200,(t.k/m.target)*100);
+  const kcalVisible=Math.min(100,kcalPct);
+  const kcalRing=document.getElementById('kcalRing');
+  if(kcalRing){
+    const offset=circ-(kcalVisible/100)*circ;
+    if(animate&&!kcalRingAnimated){
+      kcalRing.style.transition='none';
+      kcalRing.style.strokeDashoffset=circ;
+      kcalRingAnimated=true;
       requestAnimationFrame(()=>requestAnimationFrame(()=>{
-        ring.style.transition='';ring.style.strokeDashoffset=offset;
+        kcalRing.style.transition='';
+        kcalRing.style.strokeDashoffset=offset;
       }));
-    }else ring.style.strokeDashoffset=offset;
-  });
+    }else{
+      kcalRing.style.strokeDashoffset=offset;
+    }
+  }
+
+  // Water
+  const wGoal=waterGoal();
+  const wFilled=state.water[todayKey()]||0;
+  const wPct=wGoal>0?(wFilled/wGoal)*100:0;
+  const waterRing=document.getElementById('waterRing');
+  if(waterRing){
+    const offset=circ-(Math.min(wPct,100)/100)*circ;
+    if(animate&&!waterRingAnimated){
+      waterRing.style.transition='none';
+      waterRing.style.strokeDashoffset=circ;
+      waterRingAnimated=true;
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        waterRing.style.transition='';
+        waterRing.style.strokeDashoffset=offset;
+      }));
+    }else{
+      waterRing.style.strokeDashoffset=offset;
+    }
+  }
+
+  // Labels
+  document.getElementById('kcalPct').textContent=Math.round(kcalPct)+'%';
+  document.getElementById('waterPct').textContent=Math.round(wPct)+'%';
+  document.getElementById('kcalEatenShort').textContent=`${Math.round(t.k)} / ${m.target}`;
+  document.getElementById('waterTitle').textContent=`${wFilled} / ${wGoal}`;
+
   const left=m.target-t.k;
-  const leftTxt=left>=0?`${Math.round(left)} ккал`:`+${Math.round(-left)} ккал перебор`;
-  document.getElementById('kcalPct').textContent=Math.round(pct)+'%';
-  document.getElementById('diaryKcalPct').textContent=Math.round(pct)+'%';
-  document.getElementById('kcalLeft').textContent=leftTxt;
-  document.getElementById('diaryKcalLeft').textContent=leftTxt;
-  document.getElementById('kcalEaten').textContent=`Съедено ${Math.round(t.k)} из ${m.target}`;
-  document.getElementById('diaryKcalEaten').textContent=`Съедено ${Math.round(t.k)} из ${m.target}`;
+  const leftEl=document.getElementById('kcalLeft');
+  if(left>=0){
+    leftEl.textContent=`${Math.round(left)} ккал`;
+    leftEl.className='v good';
+  }else{
+    leftEl.textContent=`+${Math.round(-left)} ккал перебор`;
+    leftEl.className='v over';
+  }
+  document.getElementById('waterLiters').textContent=
+    `${(wFilled*0.3).toFixed(1)} л из ${(wGoal*0.3).toFixed(1)} л`;
+
+  // Diary ring
+  const diaryRing=document.getElementById('diaryKcalRing');
+  if(diaryRing){
+    const offset=circ-(kcalVisible/100)*circ;
+    if(animate&&!kcalRingAnimated){
+      diaryRing.style.transition='none';
+      diaryRing.style.strokeDashoffset=circ;
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        diaryRing.style.transition='';
+        diaryRing.style.strokeDashoffset=offset;
+      }));
+    }else{
+      diaryRing.style.strokeDashoffset=offset;
+    }
+  }
+  const dp=document.getElementById('diaryKcalPct');
+  if(dp){
+    dp.textContent=Math.round(kcalPct)+'%';
+    document.getElementById('diaryKcalLeft').textContent=left>=0?`${Math.round(left)} ккал`:`+${Math.round(-left)} ккал`;
+    document.getElementById('diaryKcalEaten').textContent=`Съедено ${Math.round(t.k)} из ${m.target}`;
+  }
+
+  // Macros
   const pPct=Math.min(100,(t.p/m.protein)*100);
   const fPct=Math.min(100,(t.f/m.fat)*100);
   const cPct=Math.min(100,(t.c/m.carbs)*100);
@@ -868,6 +964,34 @@ function renderKcalRings(animate){
   document.getElementById('macroPVal').textContent=`${Math.round(t.p)} / ${m.protein} г`;
   document.getElementById('macroFVal').textContent=`${Math.round(t.f)} / ${m.fat} г`;
   document.getElementById('macroCVal').textContent=`${Math.round(t.c)} / ${m.carbs} г`;
+}
+
+function waterGoal(){return Math.round(calcMetrics(currentWeight()).water/300)}
+
+function renderWater(){
+  // Обновляем только водный круг в объединённой карточке
+  const wGoal=waterGoal();
+  const wFilled=state.water[todayKey()]||0;
+  const wPct=wGoal>0?(wFilled/wGoal)*100:0;
+  const circ=276.46;
+  const waterRing=document.getElementById('waterRing');
+  if(waterRing){
+    waterRing.style.strokeDashoffset=circ-(Math.min(wPct,100)/100)*circ;
+  }
+  document.getElementById('waterPct').textContent=Math.round(wPct)+'%';
+  document.getElementById('waterTitle').textContent=`${wFilled} / ${wGoal}`;
+  document.getElementById('waterLiters').textContent=
+    `${(wFilled*0.3).toFixed(1)} л из ${(wGoal*0.3).toFixed(1)} л`;
+}
+
+function setWater(n){
+  state.water[todayKey()]=n;
+  save();renderWater();renderStreak();
+}
+function quickWater(){
+  const cur=state.water[todayKey()]||0;
+  setWater(Math.min(cur+1,waterGoal()));
+  toast('+1 стакан 💧');
 }
 
 // ===== STREAK =====
@@ -928,7 +1052,7 @@ function renderRing(animate){
   document.getElementById('ringSub').textContent=rem<=0?'🎉 Цель достигнута!':`Осталось ${rem.toFixed(1)} кг`;
 }
 
-// ===== МИНИ-ГРАФИК ВЕСА =====
+// ===== МИНИ-ГРАФИК =====
 function drawMiniChart(){
   const canvas=document.getElementById('miniChart');if(!canvas)return;
   const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
@@ -991,90 +1115,62 @@ function drawWeekKcal(){
     const d=new Date();d.setDate(d.getDate()-i);
     const key=dateKey(d);
     const kcal=(state.foodLog[key]||[]).reduce((s,e)=>s+e.k,0);
-    days.push({
-      label:d.toLocaleDateString('ru-RU',{weekday:'short'}),
-      num:d.getDate(),
-      kcal,
-      isToday:i===0
-    });
+    days.push({label:d.toLocaleDateString('ru-RU',{weekday:'short'}),num:d.getDate(),kcal,isToday:i===0});
   }
   const maxKcal=Math.max(target*1.3,...days.map(d=>d.kcal),800);
   const padL=44,padR=12,padT=26,padB=36;
   const innerW=W-padL-padR,innerH=H-padT-padB;
-  // сетка
-  ctx.strokeStyle=styles.getPropertyValue('--border').trim();
-  ctx.lineWidth=1;
+  ctx.strokeStyle=styles.getPropertyValue('--border').trim();ctx.lineWidth=1;
   for(let i=0;i<=3;i++){
     const y=padT+innerH*i/3;
     ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(W-padR,y);ctx.stroke();
     ctx.fillStyle=muted;ctx.font='10px sans-serif';ctx.textAlign='right';
     ctx.fillText(Math.round(maxKcal-(maxKcal*i/3)),padL-6,y+3);
   }
-  // линия цели
   const yT=padT+innerH*(1-target/maxKcal);
   ctx.strokeStyle=accent;ctx.setLineDash([5,4]);ctx.lineWidth=1.5;
   ctx.beginPath();ctx.moveTo(padL,yT);ctx.lineTo(W-padR,yT);ctx.stroke();
   ctx.setLineDash([]);
   ctx.fillStyle=accent;ctx.font='bold 10px sans-serif';ctx.textAlign='left';
   ctx.fillText(`цель ${target}`,padL+3,yT-4);
-  // бары
   const gap=innerW/days.length,barW=gap*0.6;
   days.forEach((d,i)=>{
     const x=padL+gap*i+(gap-barW)/2;
     const h=Math.max(2,(d.kcal/maxKcal)*innerH);
     const y=padT+innerH-h;
     let grad;
-    if(d.kcal===0){
-      grad=ctx.createLinearGradient(0,y,0,padT+innerH);
-      grad.addColorStop(0,'rgba(139,147,167,0.35)');
-      grad.addColorStop(1,'rgba(139,147,167,0.1)');
-    }else if(d.kcal>target*1.05){
-      grad=ctx.createLinearGradient(0,y,0,padT+innerH);
-      grad.addColorStop(0,'#f87171');grad.addColorStop(1,'rgba(248,113,113,0.3)');
-    }else if(d.kcal<target*0.7){
-      grad=ctx.createLinearGradient(0,y,0,padT+innerH);
-      grad.addColorStop(0,'#fbbf24');grad.addColorStop(1,'rgba(251,191,36,0.3)');
-    }else{
-      grad=ctx.createLinearGradient(0,y,0,padT+innerH);
-      grad.addColorStop(0,'#4ade80');grad.addColorStop(1,'rgba(74,222,128,0.3)');
-    }
+    if(d.kcal===0){grad=ctx.createLinearGradient(0,y,0,padT+innerH);
+      grad.addColorStop(0,'rgba(139,147,167,0.35)');grad.addColorStop(1,'rgba(139,147,167,0.1)');}
+    else if(d.kcal>target*1.05){grad=ctx.createLinearGradient(0,y,0,padT+innerH);
+      grad.addColorStop(0,'#f87171');grad.addColorStop(1,'rgba(248,113,113,0.3)');}
+    else if(d.kcal<target*0.7){grad=ctx.createLinearGradient(0,y,0,padT+innerH);
+      grad.addColorStop(0,'#fbbf24');grad.addColorStop(1,'rgba(251,191,36,0.3)');}
+    else{grad=ctx.createLinearGradient(0,y,0,padT+innerH);
+      grad.addColorStop(0,'#4ade80');grad.addColorStop(1,'rgba(74,222,128,0.3)');}
     ctx.fillStyle=grad;
-    const r=6;
-    ctx.beginPath();
-    ctx.moveTo(x+r,y);
-    ctx.lineTo(x+barW-r,y);
+    const r=6;ctx.beginPath();
+    ctx.moveTo(x+r,y);ctx.lineTo(x+barW-r,y);
     ctx.quadraticCurveTo(x+barW,y,x+barW,y+r);
-    ctx.lineTo(x+barW,padT+innerH);
-    ctx.lineTo(x,padT+innerH);
-    ctx.lineTo(x,y+r);
-    ctx.quadraticCurveTo(x,y,x+r,y);
+    ctx.lineTo(x+barW,padT+innerH);ctx.lineTo(x,padT+innerH);
+    ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);
     ctx.closePath();ctx.fill();
-    // значение сверху
-    if(d.kcal>0){
-      ctx.fillStyle=textColor;ctx.font='bold 10px sans-serif';ctx.textAlign='center';
-      ctx.fillText(d.kcal,x+barW/2,y-4);
-    }
-    // подпись
+    if(d.kcal>0){ctx.fillStyle=textColor;ctx.font='bold 10px sans-serif';ctx.textAlign='center';
+      ctx.fillText(d.kcal,x+barW/2,y-4);}
     ctx.fillStyle=d.isToday?accent:muted;
-    ctx.font=(d.isToday?'bold ':'')+'11px sans-serif';
-    ctx.textAlign='center';
-    ctx.fillText(d.label,x+barW/2,H-20);
-    ctx.fillText(d.num,x+barW/2,H-6);
+    ctx.font=(d.isToday?'bold ':'')+'11px sans-serif';ctx.textAlign='center';
+    ctx.fillText(d.label,x+barW/2,H-20);ctx.fillText(d.num,x+barW/2,H-6);
   });
-  // подсказка
   const hint=document.getElementById('weekKcalHint');
   const total=days.reduce((s,d)=>s+d.kcal,0);
   const daysWithData=days.filter(d=>d.kcal>0).length;
-  if(daysWithData===0){
-    hint.textContent='График заполнится, когда начнёшь вести дневник';
-  }else{
+  if(daysWithData===0){hint.textContent='График заполнится, когда начнёшь вести дневник';}
+  else{
     const avg=Math.round(total/daysWithData);
     const diff=avg-target;
     hint.innerHTML=`Среднее за ${daysWithData} дн: <b>${avg} ккал</b> · ${diff>0?'+':''}${diff} от цели. ${diff>50?'⚠️ Перебор. ':diff<-200?'⚠️ Недоед. ':''}Зелёный — в норме, жёлтый — мало, красный — много.`;
   }
 }
 
-// ===== СТАТИСТИКА =====
 function renderHeroStats(){
   const m=calcMetrics(currentWeight());
   document.getElementById('statKcal').textContent=m.target;
@@ -1107,19 +1203,6 @@ function renderWeekStrip(){
     el.appendChild(div);
   }
 }
-
-function waterGoal(){return Math.round(calcMetrics(currentWeight()).water/300)}
-function renderWater(){
-  const goal=waterGoal(),filled=state.water[todayKey()]||0;
-  const pct=goal>0?(filled/goal)*100:0;
-  const ring=document.getElementById('waterRing'),circ=201;
-  ring.style.strokeDashoffset=circ-(Math.min(pct,100)/100)*circ;
-  document.getElementById('waterMiniTxt').textContent=filled;
-  document.getElementById('waterTitle').textContent=`${filled} из ${goal} стаканов`;
-  document.getElementById('waterSub').textContent=`Норма: ${(goal*0.3).toFixed(1)} л (${(filled*0.3).toFixed(1)} л выпито)`;
-}
-function setWater(n){state.water[todayKey()]=n;save();renderWater();renderStreak()}
-function quickWater(){const cur=state.water[todayKey()]||0;setWater(Math.min(cur+1,waterGoal()));toast('+1 стакан 💧')}
 
 // ===== ДНЕВНИК =====
 let pendingProduct=null;
@@ -1175,13 +1258,13 @@ function confirmAdd(){
     f:+(pendingProduct.f*g/100).toFixed(1),
     c:+(pendingProduct.c*g/100).toFixed(1)
   });
-  save();closeGramsModal();renderDiary();renderKcalRings();renderStreak();drawWeekKcal();
+  save();closeGramsModal();renderDiary();renderBalance();renderStreak();drawWeekKcal();
   toast(`+${Math.round(pendingProduct.k*g/100)} ккал`);
 }
 function removeEntry(id){
   const key=todayKey();
   state.foodLog[key]=(state.foodLog[key]||[]).filter(e=>e.id!==id);
-  save();renderDiary();renderKcalRings();drawWeekKcal();
+  save();renderDiary();renderBalance();drawWeekKcal();
 }
 function renderDiary(){
   const list=document.getElementById('diaryEntries'),empty=document.getElementById('diaryEmpty');
@@ -1218,7 +1301,6 @@ function saveCustomProduct(){
   save();closeCustomModal();renderProductGrid();toast('Продукт добавлен');
 }
 
-// ===== ДУБЛИРОВАНИЕ ВЧЕРА =====
 function duplicateYesterday(){
   const y=new Date();y.setDate(y.getDate()-1);
   const yKey=dateKey(y);
@@ -1228,40 +1310,26 @@ function duplicateYesterday(){
   if(!state.foodLog[key])state.foodLog[key]=[];
   const copies=yLog.map(e=>({...e,id:Date.now()+Math.random()}));
   state.foodLog[key].push(...copies);
-  save();renderDiary();renderKcalRings();renderStreak();drawWeekKcal();
+  save();renderDiary();renderBalance();renderStreak();drawWeekKcal();
   toast(`Скопировано ${copies.length} записей`);
 }
 
-// ===== СКАНЕР ШТРИХ-КОДА =====
+// ===== СКАНЕР =====
 let qrScanner=null;
 async function openScan(){
   document.getElementById('scanModal').classList.add('show');
   const status=document.getElementById('scanStatus');
   status.textContent='Запуск камеры…';
-  if(typeof Html5Qrcode==='undefined'){
-    status.textContent='Библиотека не загрузилась. Проверь интернет или введи вручную.';
-    return;
-  }
-  if(!window.isSecureContext){
-    status.textContent='Камера работает только на HTTPS или localhost. Введи вручную.';
-    return;
-  }
+  if(typeof Html5Qrcode==='undefined'){status.textContent='Библиотека не загрузилась.';return}
+  if(!window.isSecureContext){status.textContent='Камера работает только на HTTPS.';return}
   try{
     qrScanner=new Html5Qrcode("qrReader");
-    await qrScanner.start(
-      {facingMode:"environment"},
-      {fps:10,qrbox:{width:250,height:150}},
-      onBarcodeScanned,()=>{}
-    );
+    await qrScanner.start({facingMode:"environment"},{fps:10,qrbox:{width:250,height:150}},onBarcodeScanned,()=>{});
     status.textContent='Наведи камеру на штрих-код';
-  }catch(e){
-    status.textContent='Не удалось открыть камеру. Введи вручную.';
-  }
+  }catch(e){status.textContent='Не удалось открыть камеру. Введи вручную.'}
 }
 function closeScan(){
-  if(qrScanner){
-    qrScanner.stop().then(()=>{qrScanner.clear();qrScanner=null}).catch(()=>{qrScanner=null});
-  }
+  if(qrScanner){qrScanner.stop().then(()=>{qrScanner.clear();qrScanner=null}).catch(()=>{qrScanner=null})}
   document.getElementById('scanModal').classList.remove('show');
 }
 async function onBarcodeScanned(text){
@@ -1280,18 +1348,14 @@ async function onBarcodeScanned(text){
         f:+(nutr.fat_100g||0).toFixed(1),
         c:+(nutr.carbohydrates_100g||0).toFixed(1)
       };
-      if(!prod.k){
-        status.textContent='Нет данных о ккал. Введи вручную.';
-        return;
-      }
-      closeScan();
-      openGramsModal(prod);
+      if(!prod.k){status.textContent='Нет данных о ккал. Введи вручную.';return}
+      closeScan();openGramsModal(prod);
     }else{
-      status.textContent='Продукт не найден в базе Open Food Facts';
+      status.textContent='Продукт не найден';
       setTimeout(()=>{if(qrScanner)qrScanner.resume()},1500);
     }
   }catch(e){
-    status.textContent='Ошибка поиска. Проверь интернет.';
+    status.textContent='Ошибка поиска';
     setTimeout(()=>{if(qrScanner)qrScanner.resume()},1500);
   }
 }
@@ -1349,7 +1413,6 @@ function renderTodayMeals(){
     list.appendChild(div);
   });
 }
-
 function renderTimeSettings(){
   const el=document.getElementById('timeSettings');
   el.innerHTML=state.meals.map((m,i)=>`
@@ -1471,10 +1534,8 @@ function drawChart(){
   const muted=styles.getPropertyValue('--muted').trim();
   const accent=styles.getPropertyValue('--accent').trim();
   const border=styles.getPropertyValue('--border').trim();
-  if(state.weights.length<2){
-    ctx.fillStyle=muted;ctx.font='16px sans-serif';
-    ctx.fillText('Добавь минимум 2 записи',20,H/2);return;
-  }
+  if(state.weights.length<2){ctx.fillStyle=muted;ctx.font='16px sans-serif';
+    ctx.fillText('Добавь минимум 2 записи',20,H/2);return;}
   const ws=state.weights.map(x=>x.w);
   const minW=Math.min(...ws)-1,maxW=Math.max(...ws)+1,pad=40;
   ctx.strokeStyle=border;ctx.lineWidth=1;
@@ -1509,13 +1570,13 @@ function renderHistory(){
 }
 
 function renderToday(animateRing){
-  renderTodayMeals();renderTodayTrain();renderWater();
+  renderTodayMeals();renderTodayTrain();
   renderRing(animateRing);renderHeroStats();renderWeekStrip();
   renderStreak();renderPlateau();renderProgress();
-  renderKcalRings(animateRing);drawMiniChart();drawWeekKcal();
+  renderBalance(animateRing);drawMiniChart();drawWeekKcal();
   const d=new Date();
   const ds=d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'});
-  document.getElementById('kcalDateLabel').textContent=ds;
+  document.getElementById('balanceDate').textContent=ds;
   document.getElementById('diaryKcalDate').textContent=ds;
 }
 
@@ -1651,8 +1712,8 @@ function go(page){
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.page===page));
   document.querySelectorAll('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
   window.scrollTo(0,0);
-  if(page==='today')setTimeout(()=>{drawMiniChart();renderKcalRings();drawWeekKcal()},50);
-  if(page==='diary')setTimeout(()=>{renderKcalRings();renderProductGrid()},50);
+  if(page==='today')setTimeout(()=>{drawMiniChart();renderBalance();drawWeekKcal()},50);
+  if(page==='diary')setTimeout(()=>{renderBalance();renderProductGrid()},50);
   if(page==='progress')setTimeout(drawWeekKcal,50);
 }
 document.querySelectorAll('.tab, .bottom button').forEach(b=>{b.onclick=()=>go(b.dataset.page)});
@@ -1675,7 +1736,7 @@ function renderAll(){
   document.getElementById('soundToggle').checked=state.soundEnabled;
   const d=new Date();
   document.getElementById('headDate').textContent=
-    d.toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
+    `Привет, ${USER_NAME} 👋 · `+d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'});
 }
 
 applyTheme();renderAll();scheduleAll();
