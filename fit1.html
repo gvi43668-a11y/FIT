@@ -24,9 +24,9 @@
   --grad3:linear-gradient(135deg,#d97706 0%,#dc2626 100%);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  background:var(--bg);color:var(--text);padding-bottom:90px;font-size:15px;
-  line-height:1.5;transition:background .2s,color .2s}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;
+  background:var(--bg);color:var(--text);padding-bottom:96px;font-size:15px;
+  line-height:1.5;transition:background .2s,color .2s;-webkit-font-smoothing:antialiased}
 header{background:var(--card);padding:16px;position:sticky;top:0;z-index:10;
   border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px}
 h1{font-size:18px;font-weight:600}h1 span{color:var(--accent)}
@@ -35,11 +35,6 @@ h1{font-size:18px;font-weight:600}h1 span{color:var(--accent)}
 .theme-btn{background:var(--card2);border:1px solid var(--border);color:var(--text);
   width:40px;height:40px;border-radius:12px;font-size:18px;cursor:pointer;
   display:flex;align-items:center;justify-content:center;padding:0}
-.tabs{display:flex;gap:4px;padding:12px 12px 0;overflow-x:auto}
-.tabs::-webkit-scrollbar{display:none}
-.tab{flex:0 0 auto;padding:8px 14px;border-radius:20px;background:var(--card);
-  color:var(--muted);border:1px solid var(--border);font-size:13px;font-weight:500;cursor:pointer}
-.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 .page{display:none;padding:16px}.page.active{display:block}
 .card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:12px;border:1px solid var(--border)}
 .card h3{font-size:14px;font-weight:600;margin-bottom:10px;color:var(--accent)}
@@ -73,18 +68,25 @@ button.grad{background:var(--grad2)}
 .day-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 .day-btn.today{border-color:var(--accent)}
 canvas{width:100%!important;height:auto!important}
-.fab{position:fixed;bottom:80px;right:16px;width:54px;height:54px;
+.fab{position:fixed;bottom:96px;right:16px;width:54px;height:54px;
   border-radius:50%;background:var(--grad2);color:#fff;border:none;font-size:22px;
   cursor:pointer;box-shadow:0 4px 14px rgba(59,130,246,.5);z-index:20}
+
+/* ===== BOTTOM NAV (iOS style) ===== */
 .bottom{position:fixed;bottom:0;left:0;right:0;background:var(--card);
-  border-top:1px solid var(--border);display:flex;padding:8px 0;z-index:15;
-  padding-bottom:max(8px,env(safe-area-inset-bottom))}
+  border-top:1px solid var(--border);display:flex;padding:6px 0;z-index:15;
+  padding-bottom:max(6px,env(safe-area-inset-bottom))}
 .bottom button{flex:1;background:none;border:none;color:var(--muted);font-size:10px;
-  cursor:pointer;padding:6px 0;display:flex;flex-direction:column;align-items:center;gap:3px}
+  cursor:pointer;padding:6px 2px;display:flex;flex-direction:column;align-items:center;
+  gap:3px;font-family:inherit;transition:color .15s;font-weight:500;letter-spacing:-.2px}
 .bottom button.active{color:var(--accent)}
-.bottom button span:first-child{font-size:20px}
+.bottom button svg{width:24px;height:24px;display:block;
+  transition:transform .15s ease}
+.bottom button.active svg{transform:scale(1.05)}
+.bottom button:active svg{transform:scale(.92)}
+
 .hint{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.4}
-.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);
+.toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%);
   background:var(--card);color:var(--text);padding:10px 18px;border-radius:20px;
   font-size:13px;z-index:100;opacity:0;transition:opacity .3s;pointer-events:none;
   border:1px solid var(--border);max-width:90%;text-align:center}
@@ -286,15 +288,6 @@ canvas{width:100%!important;height:auto!important}
   </div>
 </header>
 
-<div class="tabs">
-  <button class="tab active" data-page="today">Сегодня</button>
-  <button class="tab" data-page="diary">Дневник</button>
-  <button class="tab" data-page="menu">Меню</button>
-  <button class="tab" data-page="shop">Покупки</button>
-  <button class="tab" data-page="train">Тренировки</button>
-  <button class="tab" data-page="progress">Прогресс</button>
-</div>
-
 <!-- СЕГОДНЯ -->
 <div class="page active" id="page-today">
   <div id="plateauAlert"></div>
@@ -331,14 +324,12 @@ canvas{width:100%!important;height:auto!important}
     </div>
   </div>
 
-  <!-- ОБЪЕДИНЁННАЯ КАРТОЧКА: БАЛАНС ДНЯ -->
   <div class="card combined-card">
     <div class="combined-head">
       <h3>Баланс дня</h3>
       <span class="date" id="balanceDate">—</span>
     </div>
     <div class="ring-pair">
-      <!-- Kcal ring -->
       <div class="ring-block">
         <div class="kcal-mini">
           <svg width="96" height="96" viewBox="0 0 110 110">
@@ -361,7 +352,6 @@ canvas{width:100%!important;height:auto!important}
           <div class="ring-block-lbl">из лимита</div>
         </div>
       </div>
-      <!-- Water ring -->
       <div class="ring-block">
         <div class="kcal-mini">
           <svg width="96" height="96" viewBox="0 0 110 110">
@@ -395,8 +385,7 @@ canvas{width:100%!important;height:auto!important}
         <span class="v" id="waterLiters">— л</span>
       </div>
       <div class="water-btns">
-        <button class="primary" onclick="quickWater()">+ 💧 стакан</button>
-        <button onclick="setWater(0)">Сброс</button>
+        <button class="primary" onclick="quickWater()">+ 💧 стакан воды</button>
       </div>
     </div>
   </div>
@@ -664,12 +653,51 @@ canvas{width:100%!important;height:auto!important}
 
 <button class="fab" onclick="quickWater()">💧</button>
 
+<!-- ===== BOTTOM NAV ===== -->
 <div class="bottom">
-  <button data-page="today" class="active"><span>🏠</span><span>Сегодня</span></button>
-  <button data-page="diary"><span>📝</span><span>Дневник</span></button>
-  <button data-page="menu"><span>🍽</span><span>Меню</span></button>
-  <button data-page="shop"><span>🛒</span><span>Покупки</span></button>
-  <button data-page="train"><span>💪</span><span>Трен.</span></button>
+  <button data-page="today" class="active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/>
+    </svg>
+    <span>Сегодня</span>
+  </button>
+  <button data-page="diary">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/>
+      <path d="M9 8h6M9 12h6M9 16h4"/>
+    </svg>
+    <span>Дневник</span>
+  </button>
+  <button data-page="menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 3v7a3 3 0 0 0 3 3M8 3v7M11 3v7M8 13v8"/>
+      <path d="M18 3c-1.7 0-3 1.3-3 3v6h3M18 12v9M18 3v6"/>
+    </svg>
+    <span>Меню</span>
+  </button>
+  <button data-page="shop">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="9" cy="20" r="1.5"/>
+      <circle cx="18" cy="20" r="1.5"/>
+      <path d="M2 3h2l2.5 12.5a2 2 0 0 0 2 1.5h9.5a2 2 0 0 0 2-1.6L22 7H5"/>
+    </svg>
+    <span>Покупки</span>
+  </button>
+  <button data-page="train">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6.5 6.5v11M17.5 6.5v11"/>
+      <path d="M3 9.5v5M21 9.5v5"/>
+      <path d="M6.5 12h11"/>
+    </svg>
+    <span>Трен.</span>
+  </button>
+  <button data-page="progress">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 17l5-5 4 4 5-7 4 4"/>
+      <path d="M3 21h18"/>
+    </svg>
+    <span>Прогресс</span>
+  </button>
 </div>
 
 <!-- МОДАЛКА: граммы -->
@@ -866,7 +894,6 @@ function todayTotals(){
   return todayEntries().reduce((a,e)=>({k:a.k+e.k,p:a.p+e.p,f:a.f+e.f,c:a.c+e.c}),{k:0,p:0,f:0,c:0});
 }
 
-// ===== ОБЪЕДИНЁННЫЙ РЕНДЕР ККАЛ + ВОДА =====
 let kcalRingAnimated=false;
 let waterRingAnimated=false;
 
@@ -875,7 +902,6 @@ function renderBalance(animate){
   const t=todayTotals();
   const circ=276.46;
 
-  // Kcal
   const kcalPct=Math.min(200,(t.k/m.target)*100);
   const kcalVisible=Math.min(100,kcalPct);
   const kcalRing=document.getElementById('kcalRing');
@@ -894,7 +920,6 @@ function renderBalance(animate){
     }
   }
 
-  // Water
   const wGoal=waterGoal();
   const wFilled=state.water[todayKey()]||0;
   const wPct=wGoal>0?(wFilled/wGoal)*100:0;
@@ -914,7 +939,6 @@ function renderBalance(animate){
     }
   }
 
-  // Labels
   document.getElementById('kcalPct').textContent=Math.round(kcalPct)+'%';
   document.getElementById('waterPct').textContent=Math.round(wPct)+'%';
   document.getElementById('kcalEatenShort').textContent=`${Math.round(t.k)} / ${m.target}`;
@@ -932,7 +956,6 @@ function renderBalance(animate){
   document.getElementById('waterLiters').textContent=
     `${(wFilled*0.3).toFixed(1)} л из ${(wGoal*0.3).toFixed(1)} л`;
 
-  // Diary ring
   const diaryRing=document.getElementById('diaryKcalRing');
   if(diaryRing){
     const offset=circ-(kcalVisible/100)*circ;
@@ -954,7 +977,6 @@ function renderBalance(animate){
     document.getElementById('diaryKcalEaten').textContent=`Съедено ${Math.round(t.k)} из ${m.target}`;
   }
 
-  // Macros
   const pPct=Math.min(100,(t.p/m.protein)*100);
   const fPct=Math.min(100,(t.f/m.fat)*100);
   const cPct=Math.min(100,(t.c/m.carbs)*100);
@@ -969,7 +991,6 @@ function renderBalance(animate){
 function waterGoal(){return Math.round(calcMetrics(currentWeight()).water/300)}
 
 function renderWater(){
-  // Обновляем только водный круг в объединённой карточке
   const wGoal=waterGoal();
   const wFilled=state.water[todayKey()]||0;
   const wPct=wGoal>0?(wFilled/wGoal)*100:0;
@@ -994,7 +1015,6 @@ function quickWater(){
   toast('+1 стакан 💧');
 }
 
-// ===== STREAK =====
 function hasActivityOn(key){
   if((state.water[key]||0)>0)return true;
   if(Object.values(state.mealsDone).includes(key))return true;
@@ -1030,7 +1050,6 @@ function renderPlateau(){
   el.innerHTML=`<div class="warn"><b>⚠️ Плато</b><br>За ${p.days} дней вес почти не изменился (${p.diff>0?'+':''}${p.diff} кг). Что делать: −100–150 ккал или +2000 шагов.</div>`;
 }
 
-// ===== КРУГ ДО ЦЕЛИ =====
 let ringAnimated=false;
 function renderRing(animate){
   const start=PROFILE.startWeight,goal=PROFILE.goalWeight,now=currentWeight();
@@ -1052,7 +1071,6 @@ function renderRing(animate){
   document.getElementById('ringSub').textContent=rem<=0?'🎉 Цель достигнута!':`Осталось ${rem.toFixed(1)} кг`;
 }
 
-// ===== МИНИ-ГРАФИК =====
 function drawMiniChart(){
   const canvas=document.getElementById('miniChart');if(!canvas)return;
   const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
@@ -1100,7 +1118,6 @@ function drawMiniChart(){
   if(rangeEl)rangeEl.textContent=`${first.toFixed(1)} → ${last.toFixed(1)} кг (${diff>0?'+':''}${diff.toFixed(1)})`;
 }
 
-// ===== ГРАФИК ККАЛ ЗА НЕДЕЛЮ =====
 function drawWeekKcal(){
   const canvas=document.getElementById('weekKcalChart');if(!canvas)return;
   const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
@@ -1204,7 +1221,6 @@ function renderWeekStrip(){
   }
 }
 
-// ===== ДНЕВНИК =====
 let pendingProduct=null;
 function renderProductGrid(){
   const q=(document.getElementById('prodSearch').value||'').toLowerCase().trim();
@@ -1314,7 +1330,6 @@ function duplicateYesterday(){
   toast(`Скопировано ${copies.length} записей`);
 }
 
-// ===== СКАНЕР =====
 let qrScanner=null;
 async function openScan(){
   document.getElementById('scanModal').classList.add('show');
@@ -1364,7 +1379,6 @@ function manualBarcode(){
   if(code&&code.trim())onBarcodeScanned(code.trim());
 }
 
-// ===== МЕНЮ =====
 function renderMenuDayNav(){
   const nav=document.getElementById('menuDayNav');nav.innerHTML='';
   const today=dayOfWeek();
@@ -1580,7 +1594,6 @@ function renderToday(animateRing){
   document.getElementById('diaryKcalDate').textContent=ds;
 }
 
-// ===== СИНХРОНИЗАЦИЯ =====
 function generateSyncCode(){
   try{
     const json=JSON.stringify(state);
@@ -1616,7 +1629,6 @@ function applySyncCode(){
   document.getElementById('syncCodeInput').value='';
 }
 
-// ===== НАПОМИНАНИЯ =====
 let notifTimers={};
 function requestNotif(){
   if(!('Notification'in window)){toast('Браузер не поддерживает');return}
@@ -1709,14 +1721,13 @@ function importData(ev){
 function go(page){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+page).classList.add('active');
-  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.page===page));
   document.querySelectorAll('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
   window.scrollTo(0,0);
   if(page==='today')setTimeout(()=>{drawMiniChart();renderBalance();drawWeekKcal()},50);
   if(page==='diary')setTimeout(()=>{renderBalance();renderProductGrid()},50);
   if(page==='progress')setTimeout(drawWeekKcal,50);
 }
-document.querySelectorAll('.tab, .bottom button').forEach(b=>{b.onclick=()=>go(b.dataset.page)});
+document.querySelectorAll('.bottom button').forEach(b=>{b.onclick=()=>go(b.dataset.page)});
 
 function toast(msg){
   const t=document.getElementById('toast');t.textContent=msg;
