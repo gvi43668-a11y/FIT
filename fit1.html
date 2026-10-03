@@ -72,7 +72,7 @@ canvas{width:100%!important;height:auto!important}
   border-radius:50%;background:var(--grad2);color:#fff;border:none;font-size:22px;
   cursor:pointer;box-shadow:0 4px 14px rgba(59,130,246,.5);z-index:20}
 
-/* ===== BOTTOM NAV (iOS style) ===== */
+/* BOTTOM NAV */
 .bottom{position:fixed;bottom:0;left:0;right:0;background:var(--card);
   border-top:1px solid var(--border);display:flex;padding:6px 0;z-index:15;
   padding-bottom:max(6px,env(safe-area-inset-bottom))}
@@ -80,8 +80,7 @@ canvas{width:100%!important;height:auto!important}
   cursor:pointer;padding:6px 2px;display:flex;flex-direction:column;align-items:center;
   gap:3px;font-family:inherit;transition:color .15s;font-weight:500;letter-spacing:-.2px}
 .bottom button.active{color:var(--accent)}
-.bottom button svg{width:24px;height:24px;display:block;
-  transition:transform .15s ease}
+.bottom button svg{width:24px;height:24px;display:block;transition:transform .15s ease}
 .bottom button.active svg{transform:scale(1.05)}
 .bottom button:active svg{transform:scale(.92)}
 
@@ -103,7 +102,6 @@ canvas{width:100%!important;height:auto!important}
   color:var(--danger);padding:12px;border-radius:12px;font-size:13px;margin-bottom:12px}
 .btn-row{display:flex;gap:8px}.btn-row button{flex:1}
 
-/* hero */
 .hero{background:var(--card);border-radius:20px;padding:20px 16px;margin-bottom:12px;
   border:1px solid var(--border);position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;top:-60%;right:-30%;width:280px;height:280px;
@@ -136,7 +134,6 @@ canvas{width:100%!important;height:auto!important}
   color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
 #miniChart{display:block;width:100%;height:60px}
 
-/* Combined balance card */
 .combined-card{padding:16px}
 .combined-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
 .combined-head h3{margin:0}
@@ -168,10 +165,13 @@ canvas{width:100%!important;height:auto!important}
 .combined-actions-row .v{font-size:15px;font-weight:700}
 .combined-actions-row .v.good{color:var(--accent)}
 .combined-actions-row .v.over{color:var(--danger)}
+.combined-breakdown{font-size:11px;color:var(--muted);margin-top:8px;padding-top:8px;
+  border-top:1px dashed var(--border);line-height:1.4}
 .water-btns{display:flex;gap:6px;margin-top:10px}
-.water-btns button{flex:1;background:var(--card2);border:1px solid var(--border);color:var(--text);
+.water-btns button{background:var(--card2);border:1px solid var(--border);color:var(--text);
   padding:9px 12px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer}
-.water-btns button.primary{background:var(--grad2);color:#fff;border:none}
+.water-btns button.primary{background:var(--grad2);color:#fff;border:none;flex:1}
+.water-btns button.minus{flex:0 0 48px;font-size:18px;line-height:1;padding:0}
 
 .macros-card{padding:14px 16px}
 .macro-row{display:grid;grid-template-columns:60px 1fr 78px;gap:10px;align-items:center;padding:8px 0}
@@ -203,7 +203,7 @@ canvas{width:100%!important;height:auto!important}
 .week-day.today{border-color:var(--accent);border-width:2px}
 .week-day.done .dot{background:var(--accent);box-shadow:0 0 8px var(--accent)}
 .week-day .dow{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase}
-.week-day .dot{width:8px;height:8px;border-radius:50%;background:var(--border);margin:6px auto 4px;transition:all .3s}
+.week-day .:dot{width:8px;height:8px;border-radius:50%;background:var(--border);margin:6px auto 4px;transition:all .3s}
 .week-day .num{font-size:11px;color:var(--muted)}
 
 .quick-meals{display:flex;flex-direction:column;gap:6px}
@@ -217,6 +217,7 @@ canvas{width:100%!important;height:auto!important}
 .qm-body{flex:1;min-width:0}
 .qm-time{font-size:11px;color:var(--muted);font-weight:600}
 .qm-text{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qm-kcal{font-size:11px;color:var(--accent);font-weight:700;flex-shrink:0}
 
 .train-hero{background:linear-gradient(135deg,var(--card) 0%,var(--card2) 100%);
   border-radius:16px;padding:16px;border:1px solid var(--border);position:relative;overflow:hidden}
@@ -251,6 +252,8 @@ canvas{width:100%!important;height:auto!important}
 .entry .del{width:28px;height:28px;border-radius:8px;background:var(--card2);
   border:1px solid var(--border);color:var(--danger);cursor:pointer;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;font-size:14px}
+.entry.meal-entry{background:rgba(74,222,128,.05);border-radius:10px;padding:10px 12px;
+  margin-bottom:6px;border:none}
 
 .diary-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
 .diary-actions button{padding:12px 8px;border-radius:12px;font-weight:600;font-size:13px;
@@ -258,7 +261,7 @@ canvas{width:100%!important;height:auto!important}
   display:flex;align-items:center;justify-content:center;gap:6px}
 .diary-actions button.primary{background:var(--grad2);color:#fff;border:none}
 
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:40;
+.modal-bg{position:fixed;inset0;background:rgba(0,0,0,.7);z-index:40;
   display:none;align-items:flex-end;justify-content:center;padding:16px}
 .modal-bg.show{display:flex}
 .modal{background:var(--card);border-radius:20px;padding:20px;width:100%;max-width:480px;
@@ -385,8 +388,10 @@ canvas{width:100%!important;height:auto!important}
         <span class="v" id="waterLiters">— л</span>
       </div>
       <div class="water-btns">
+        <button class="minus" onclick="minusWater()">−</button>
         <button class="primary" onclick="quickWater()">+ 💧 стакан воды</button>
       </div>
+      <div class="combined-breakdown" id="kcalBreakdown"></div>
     </div>
   </div>
 
@@ -642,9 +647,9 @@ canvas{width:100%!important;height:auto!important}
     <div id="remindersList"></div>
   </div>
 
-  <div class="card">
-    <h3>Данные</h3>
-    <button class="btn ghost" onclick="exportData()">Экспорт в файл</button>
+  <div classcurrent="Colorcard">
+"    <h3>Данные</ strokeh3>
+    <button class="-widthbtn ghost" onclick="exportData()">="Экспорт в файл</button>
     <button class="btn ghost" onclick="document.getElementById('importFile').click()">Импорт из файла</button>
     <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
     <button class="btn danger" onclick="resetAll()">Удалить все данные</button>
@@ -653,7 +658,6 @@ canvas{width:100%!important;height:auto!important}
 
 <button class="fab" onclick="quickWater()">💧</button>
 
-<!-- ===== BOTTOM NAV ===== -->
 <div class="bottom">
   <button data-page="today" class="active">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -662,7 +666,7 @@ canvas{width:100%!important;height:auto!important}
     <span>Сегодня</span>
   </button>
   <button data-page="diary">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" stroke="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/>
       <path d="M9 8h6M9 12h6M9 16h4"/>
     </svg>
@@ -753,6 +757,15 @@ canvas{width:100%!important;height:auto!important}
 
 <script>
 const USER_NAME = "Влад";
+
+// Примерная калорийность приёмов пищи из меню
+const MEAL_KCAL = [
+  {k:450, p:30, f:18, c:40},  // Завтрак
+  {k:250, p:25, f:8,  c:15},  // Перекус 1
+  {k:490, p:45, f:14, c:45},  // Обед
+  {k:200, p:8,  f:5,  c:30},  // Перекус 2
+  {k:350, p:40, f:12, c:25}   // Ужин
+];
 
 const PRODUCTS = [
   {n:"Куриная грудка",k:165,p:31,f:3.6,c:0},{n:"Куриное бедро",k:185,p:25,f:10,c:0},
@@ -890,8 +903,27 @@ function avgWeight7(){
 
 function allProducts(){return[...state.customProducts,...PRODUCTS]}
 function todayEntries(){return state.foodLog[todayKey()]||[]}
-function todayTotals(){
+
+// Сумма из дневника
+function diaryTotals(){
   return todayEntries().reduce((a,e)=>({k:a.k+e.k,p:a.p+e.p,f:a.f+e.f,c:a.c+e.c}),{k:0,p:0,f:0,c:0});
+}
+// Сумма из отмеченных галочек меню
+function mealsTotals(){
+  const day=dayOfWeek();
+  let k=0,p=0,f=0,c=0,count=0;
+  MENU[day].forEach((_,i)=>{
+    const key=`${day}-${i}`;
+    if(state.mealsDone[key]===todayKey()){
+      k+=MEAL_KCAL[i].k;p+=MEAL_KCAL[i].p;f+=MEAL_KCAL[i].f;c+=MEAL_KCAL[i].c;count++;
+    }
+  });
+  return {k,p,f,c,count};
+}
+// Общий итог
+function todayTotals(){
+  const d=diaryTotals(),m=mealsTotals();
+  return {k:d.k+m.k,p:d.p+m.p,f:d.f+m.f,c:d.c+m.c,d,m};
 }
 
 let kcalRingAnimated=false;
@@ -956,6 +988,16 @@ function renderBalance(animate){
   document.getElementById('waterLiters').textContent=
     `${(wFilled*0.3).toFixed(1)} л из ${(wGoal*0.3).toFixed(1)} л`;
 
+  // Разбивка
+  const bd=document.getElementById('kcalBreakdown');
+  if(bd){
+    if(t.d.k>0||t.m.k>0){
+      bd.innerHTML=`Из меню: <b>${Math.round(t.m.k)} ккал</b> · Из дневника: <b>${Math.round(t.d.k)} ккал</b>`;
+    }else{
+      bd.innerHTML='Отмечай приёмы пищи или добавляй продукты в дневник';
+    }
+  }
+
   const diaryRing=document.getElementById('diaryKcalRing');
   if(diaryRing){
     const offset=circ-(kcalVisible/100)*circ;
@@ -1006,13 +1048,19 @@ function renderWater(){
 }
 
 function setWater(n){
-  state.water[todayKey()]=n;
+  state.water[todayKey()]=Math.max(0,n);
   save();renderWater();renderStreak();
 }
 function quickWater(){
   const cur=state.water[todayKey()]||0;
   setWater(Math.min(cur+1,waterGoal()));
   toast('+1 стакан 💧');
+}
+function minusWater(){
+  const cur=state.water[todayKey()]||0;
+  if(cur<=0){toast('Уже 0 стаканов');return;}
+  setWater(cur-1);
+  toast('−1 стакан');
 }
 
 function hasActivityOn(key){
@@ -1032,7 +1080,7 @@ function calcStreak(){
 function renderStreak(){
   const el=document.getElementById('streakBadge'),s=calcStreak();
   if(s===0){el.className='streak-badge cold';el.textContent='🔥 начни'}
-  else{el.className='streak-badge';el.textContent=`🔥 ${s} ${s===1?'день':(s<5?'дня':'дней')}`}
+  else{ctxel.className='streak-badge';el.textContent=`🔥 ${s} ${s===1?'день':(s<5?'дня':'дней')}`}
 }
 
 function detectPlateau(){
@@ -1131,8 +1179,17 @@ function drawWeekKcal(){
   for(let i=6;i>=0;i--){
     const d=new Date();d.setDate(d.getDate()-i);
     const key=dateKey(d);
-    const kcal=(state.foodLog[key]||[]).reduce((s,e)=>s+e.k,0);
-    days.push({label:d.toLocaleDateString('ru-RU',{weekday:'short'}),num:d.getDate(),kcal,isToday:i===0});
+    // Kcal из дневника
+    const fromDiary=(state.foodLog[key]||[]).reduce((s,e)=>s+e.k,0);
+    // Kcal из галочек меню (только для текущего дня, для прошлых - нет данных)
+    let fromMeals=0;
+    if(i===0){
+      const day=dayOfWeek();
+      MENU[day].forEach((_,idx)=>{
+        if(state.mealsDone[`${day}-${idx}`]===todayKey())fromMeals+=MEAL_KCAL[idx].k;
+      });
+    }
+    days.push({label:d.toLocaleDateString('ru-RU',{weekday:'short'}),num:d.getDate(),kcal:fromDiary+fromMeals,isToday:i===0});
   }
   const maxKcal=Math.max(target*1.3,...days.map(d=>d.kcal),800);
   const padL=44,padR=12,padT=26,padB=36;
@@ -1146,7 +1203,7 @@ function drawWeekKcal(){
   }
   const yT=padT+innerH*(1-target/maxKcal);
   ctx.strokeStyle=accent;ctx.setLineDash([5,4]);ctx.lineWidth=1.5;
-  ctx.beginPath();ctx.moveTo(padL,yT);ctx.lineTo(W-padR,yT);ctx.stroke();
+  ctx.beginPath();.moveTo(padL,yT);ctx.lineTo(W-padR,yT);ctx.stroke();
   ctx.setLineDash([]);
   ctx.fillStyle=accent;ctx.font='bold 10px sans-serif';ctx.textAlign='left';
   ctx.fillText(`цель ${target}`,padL+3,yT-4);
@@ -1184,7 +1241,7 @@ function drawWeekKcal(){
   else{
     const avg=Math.round(total/daysWithData);
     const diff=avg-target;
-    hint.innerHTML=`Среднее за ${daysWithData} дн: <b>${avg} ккал</b> · ${diff>0?'+':''}${diff} от цели. ${diff>50?'⚠️ Перебор. ':diff<-200?'⚠️ Недоед. ':''}Зелёный — в норме, жёлтый — мало, красный — много.`;
+    hint.innerHTML=`Среднее за ${daysWithData} дн: <b>${avg} ккал</b> · ${diff>0?'+':''}${diff} от цели.`;
   }
 }
 
@@ -1408,7 +1465,11 @@ function renderMenu(){
 function toggleMeal(key){
   if(state.mealsDone[key]===todayKey())delete state.mealsDone[key];
   else state.mealsDone[key]=todayKey();
-  save();renderMenu();renderTodayMeals();renderHeroStats();renderStreak();
+  save();
+  renderMenu();renderTodayMeals();renderHeroStats();
+  renderStreak();
+  renderBalance();     // обновляет круг калорий
+  drawWeekKcal();
 }
 function renderTodayMeals(){
   const list=document.getElementById('todayMeals'),day=dayOfWeek();
@@ -1422,7 +1483,8 @@ function renderTodayMeals(){
       <div class="qm-body">
         <div class="qm-time">${state.meals[i].time} · ${state.meals[i].name}</div>
         <div class="qm-text">${text}</div>
-      </div>`;
+      </div>
+      <div class="qm-kcal">${MEAL_KCAL[i].k}</div>`;
     div.onclick=()=>toggleMeal(key);
     list.appendChild(div);
   });
@@ -1698,74 +1760,4 @@ function updateReminderTime(i,val){
 
 function exportData(){
   const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download=`fitplan-${todayKey()}.json`;a.click();
-  URL.revokeObjectURL(url);toast('Файл сохранён');
-}
-function importData(ev){
-  const file=ev.target.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    try{
-      const data=JSON.parse(e.target.result);
-      if(confirm('Заменить текущие данные?')){
-        state=Object.assign({},defaultState,data);
-        save();applyTheme();renderAll();scheduleAll();toast('Данные загружены');
-      }
-    }catch(err){toast('Ошибка файла')}
-  };
-  reader.readAsText(file);
-}
-
-function go(page){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-  document.querySelectorAll('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
-  window.scrollTo(0,0);
-  if(page==='today')setTimeout(()=>{drawMiniChart();renderBalance();drawWeekKcal()},50);
-  if(page==='diary')setTimeout(()=>{renderBalance();renderProductGrid()},50);
-  if(page==='progress')setTimeout(drawWeekKcal,50);
-}
-document.querySelectorAll('.bottom button').forEach(b=>{b.onclick=()=>go(b.dataset.page)});
-
-function toast(msg){
-  const t=document.getElementById('toast');t.textContent=msg;
-  t.classList.add('show');clearTimeout(t._timer);
-  t._timer=setTimeout(()=>t.classList.remove('show'),1800);
-}
-function resetAll(){
-  if(confirm('Удалить ВСЕ данные?')){
-    localStorage.removeItem('fitState');location.reload();
-  }
-}
-
-function renderAll(){
-  renderMenu();renderTrain();renderToday(true);renderShop();
-  renderReminders();renderTimeSettings();renderDiary();
-  document.getElementById('vibToggle').checked=state.vibEnabled;
-  document.getElementById('soundToggle').checked=state.soundEnabled;
-  const d=new Date();
-  document.getElementById('headDate').textContent=
-    `Привет, ${USER_NAME} 👋 · `+d.toLocaleDateString('ru-RU',{day:'numeric',month:'long'});
-}
-
-applyTheme();renderAll();scheduleAll();
-window.addEventListener('resize',()=>{drawMiniChart();drawWeekKcal()});
-
-document.querySelectorAll('.modal-bg').forEach(m=>{
-  m.onclick=e=>{if(e.target===m){
-    closeGramsModal();closeCustomModal();
-    if(m.id==='scanModal')closeScan();
-  }};
-});
-
-setInterval(()=>{
-  const lastKey=sessionStorage.getItem('lastDay');
-  const curKey=todayKey();
-  if(lastKey&&lastKey!==curKey)location.reload();
-  sessionStorage.setItem('lastDay',curKey);
-},60000);
-</script>
-</body>
-</html>
+  const url=URL.createObjectURL(
